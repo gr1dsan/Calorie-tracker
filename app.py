@@ -7,8 +7,8 @@ app.secret_key = "super_secret_key"
 
 db = pymysql.connect(
     host="localhost",
-    user="root",
-    password="12345678",
+    user="your_user",
+    password="your_password",
     database="c_t",
     cursorclass=pymysql.cursors.DictCursor,
     autocommit=False
