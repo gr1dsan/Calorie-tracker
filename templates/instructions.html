@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Instructions</title>
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("static/images/background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            color: #222;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .instructions-container {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 40px 30px;
+            border-radius: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .instructions-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin: 0;
+            font-size: 1.5rem;
+            color: #004981;
+        }
+
+        .instruction-text {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .back-button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 16px;
+            background: #2c7be5;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.2s;
+            width: 120px;
+        }
+
+        .back-button:hover {
+            background: #1a5ec8;
+        }
+
+        @media (max-width: 480px) {
+            .instructions-container {
+                width: 90%;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="instructions-container">
+        <h2>Instructions</h2>
+        <div class="instruction-text">
+            <p>Welcome to the Food Tracker app! Here’s how to use it:</p>
+            <ul>
+                <li>Select a date to view or add foods for that day.</li>
+                <li>Use the "Add Food" section to enter new foods and their nutritional values.</li>
+                <li>Click "Save" to store foods for future use in the "Saved Foods" section.</li>
+                <li>You can also delete foods from your daily list or saved list using the "Delete" button.</li>
+                <li>Your total calories, protein, carbs, and fats are displayed under the daily food list.</li>
+            </ul>
+            <p>Use the navigation links at the top to edit your profile or log out.</p>
+        </div>
+        <p>Swipe to go back</p>
+    </div>
+
+</body>
+</html>

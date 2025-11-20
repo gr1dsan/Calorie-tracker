@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Main</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="left-title">Hello, {{ username }}</div>
+  <div class="right-actions">
+    <a class="btn-link" href="{{ url_for('instructions') }}">Instructions</a>
+    <a class="btn-link" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+    <a class="btn-link" href="{{ url_for('logout') }}">Logout</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="food_table">
+    <form method="POST" class="date-form">
+      <input id="date" type="date" name="date" value="{{ date }}" required>
+      <input type="hidden" name="form_type" value="load_date">
+      <button type="submit">Load</button>
+    </form>
+
+    {% if foods %}
+    <div class="food-list">
+      {% for f in foods %}
+      <div class="food-item">
+        <div class="food-info">
+          <div class="food-name">{{ f.food_name }}</div>
+          <div class="macros">
+            <span>Calories: {{ f.calories }}</span>
+            <span>Protein: {{ f.protein }}</span>
+            <span>Carbohydrants: {{ f.carbohydrants }}</span>
+            <span>Fat: {{ f.fats }}</span>
+          </div>
+        </div>
+        <div class="actions">
+          <form method="POST" class="inline-form">
+            <input type="hidden" name="form_type" value="action">
+            <input type="hidden" name="action" value="save">
+            <input type="hidden" name="food_id" value="{{ f.id }}">
+            <input type="hidden" name="table" value="food_track">
+            <input type="hidden" name="current_date" value="{{ date }}">
+            <button type="submit">Save</button>
+          </form>
+          <form method="POST" class="inline-form">
+            <input type="hidden" name="form_type" value="action">
+            <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="food_id" value="{{ f.id }}">
+            <input type="hidden" name="table" value="food_track">
+            <input type="hidden" name="current_date" value="{{ date }}">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="total_macros">
+      <div><strong>Total Calories:</strong> {{ totals.calories }}</div>
+      <div><strong>Total Protein:</strong> {{ totals.protein }}</div>
+      <div><strong>Total Carbs:</strong> {{ totals.carbs }}</div>
+      <div><strong>Total Fats:</strong> {{ totals.fats }}</div>
+    </div>
+
+    {% else %}
+    <div class="no-data-food-table">
+        No foods added yet for this date.
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="right_column">
+
+    <div class="add_food">
+      <h3>Add Food</h3>
+      <form method="POST" class="add-form">
+        <input type="hidden" name="form_type" value="add_food">
+        <input type="hidden" name="current_date" value="{{ date }}">
+
+        <div class="input-group">
+          <label>Name</label>
+          <input id="add_name" name="food_name" placeholder="Enter name" required>
+        </div>
+
+        <div class="input-group">
+          <label>Calories</label>
+          <input id="add_cal" name="food_calories" step="0.1" type="number" placeholder="Enter calories" required>
+        </div>
+
+        <div class="input-group">
+          <label>Protein</label>
+          <input id="add_pro" name="food_protein" step="0.1" type="number" placeholder="Enter protein" required>
+        </div>
+
+        <div class="input-group">
+          <label>Carbs</label>
+          <input id="add_car" name="food_carbohydrants" step="0.1" type="number" placeholder="Enter carbs" required>
+        </div>
+
+        <div class="input-group">
+          <label>Fats</label>
+          <input id="add_fat" name="food_fats" step="0.1" type="number" placeholder="Enter fats" required>
+        </div>
+
+        <button type="submit">Add</button>
+      </form>
+    </div>
+
+    <div class="saved_food">
+        <div class = "saved_food_title">
+            <h3>Saved Foods</h3>
+        </div>
+
+       {% if saved_foods %}
+       <ul class="saved-list">
+           {% for sf in saved_foods %}
+           <li class="saved-item">
+
+               <div class="saved_item">
+                   <span class="saved-name">{{ sf.food_name }}</span>
+               </div>
+
+               <div class="actions_saved">
+                   <button class="btn-add-populate"
+                           data-name="{{ sf.food_name|e }}"
+                           data-cal="{{ sf.calories }}"
+                           data-pro="{{ sf.protein }}"
+                           data-carb="{{ sf.carbohydrants }}"
+                           data-fat="{{ sf.fats }}">
+                       Add
+                  </button>
+
+                   <form method="POST" class="inline-form">
+                       <input type="hidden" name="form_type" value="action">
+                       <input type="hidden" name="action" value="delete">
+                       <input type="hidden" name="food_id" value="{{ sf.id }}">
+                       <input type="hidden" name="table" value="food_db">
+                       <input type="hidden" name="current_date" value="{{ date }}">
+                       <button type="submit">Delete</button>
+                   </form>
+               </div>
+
+           </li>
+           {% endfor %}
+       </ul>
+
+       {% else %}
+       <div class="no-data">Nothing here yet</div>
+       {% endif %}
+   </div>
+
+
+  </div>
+
+</main>
+
+<script>
+document.addEventListener('click', function (e) {
+  if (!e.target.classList.contains('btn-add-populate')) return;
+  const btn = e.target;
+  document.getElementById('add_name').value = btn.dataset.name || '';
+  document.getElementById('add_cal').value = btn.dataset.cal || '';
+  document.getElementById('add_pro').value = btn.dataset.pro || '';
+  document.getElementById('add_car').value = btn.dataset.carb || '';
+  document.getElementById('add_fat').value = btn.dataset.fat || '';
+  document.getElementById('add_name').scrollIntoView({behavior:'smooth', block:'center'});
+});
+</script>
+
+</body>
+</html>
