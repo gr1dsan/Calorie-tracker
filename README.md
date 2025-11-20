@@ -51,10 +51,12 @@ mysql -u root -p c_t < db.sql
 Change this part of the code according to your database configurations.
 
 ```bash
-DB_HOST=localhost
-DB_USER=your_mysql_user
-DB_PASSWORD=your_mysql_password
-DB_NAME=c_t
+host="localhost",
+user="your_user",
+password="your_password",
+database="c_t",
+cursorclass=pymysql.cursors.DictCursor,
+autocommit=False
 ```
 
 ### 6. Run the app
